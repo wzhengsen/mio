@@ -774,6 +774,8 @@ template<
 # include <fcntl.h>
 # include <sys/mman.h>
 # include <sys/stat.h>
+#else
+# include <vector>
 #endif
 
 namespace mio {
@@ -799,7 +801,7 @@ inline std::wstring s_2_ws(const std::string& s)
     if (s.empty())
         return {};
     const auto s_length = static_cast<int>(s.length());
-    auto buf = std::vector<wchar_t>(s_length);
+    std::vector<wchar_t> buf(s_length);
     const auto wide_char_count = MultiByteToWideChar(CP_UTF8, 0, s.c_str(), s_length, buf.data(), s_length);
     return std::wstring(buf.data(), wide_char_count);
 }
